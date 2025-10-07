@@ -15,7 +15,9 @@ type DurakResponse[T any] struct {
 	Headers map[string]string
 }
 
-func (r *DurakResponse[T]) Send(w http.ResponseWriter) *DurakResponse[T] {
+type DurakHandlerResult struct{}
+
+func (r *DurakResponse[T]) Send(w http.ResponseWriter) *DurakHandlerResult {
 	responseJson, err := json.Marshal(r)
 	if err != nil {
 		log.Println("Ошибка маршалинга HTTP-ответа")
@@ -29,5 +31,5 @@ func (r *DurakResponse[T]) Send(w http.ResponseWriter) *DurakResponse[T] {
 	}
 	w.WriteHeader(int(r.Code))
 	w.Write(responseJson)
-	return r
+	return &DurakHandlerResult{}
 }

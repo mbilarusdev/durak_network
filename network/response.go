@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-type DurakResponse[T any] struct {
+type Response[T any] struct {
 	Code    int        `json:"code"`
 	Data    T          `json:"data,omitempty"`
 	Err     *ErrorPart `json:"err,omitempty"`
@@ -15,9 +15,9 @@ type DurakResponse[T any] struct {
 	Headers map[string]string
 }
 
-type DurakHandlerResult struct{}
+type Result struct{}
 
-func (r *DurakResponse[T]) Send(w http.ResponseWriter) *DurakHandlerResult {
+func (r *Response[T]) Send(w http.ResponseWriter) *Result {
 	responseJson, err := json.Marshal(r)
 	if err != nil {
 		log.Println("Ошибка маршалинга HTTP-ответа")
@@ -31,5 +31,5 @@ func (r *DurakResponse[T]) Send(w http.ResponseWriter) *DurakHandlerResult {
 	}
 	w.WriteHeader(int(r.Code))
 	w.Write(responseJson)
-	return &DurakHandlerResult{}
+	return &Result{}
 }

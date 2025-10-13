@@ -1,11 +1,11 @@
-package net_utils
+package net_util
 
 import (
 	"encoding/json"
 	"log"
 	"net/http"
 
-	net_res "github.com/mbilarusdev/durak_network/network/structs/response"
+	net_res "github.com/mbilarusdev/durak_network/response"
 )
 
 func SendResponse(
